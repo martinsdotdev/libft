@@ -6,7 +6,7 @@
 #    By: martins <martins@student.42sp.org.br>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 18:20:34 by martins           #+#    #+#              #
-#    Updated: 2024/10/21 10:57:40 by martins          ###   ########.fr        #
+#    Updated: 2024/11/16 01:49:57 by martins          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -150,6 +150,7 @@ SRCS		:= \
 	ft_linkedlist/ft_lstmap.c \
 	\
 	ft_arraylist/ft_arrnew.c \
+	ft_arraylist/ft_arrnew_size.c \
 	ft_arraylist/ft_arrfree.c \
 	ft_arraylist/ft_arrsize.c \
 	ft_arraylist/ft_arrisempty.c \
