@@ -6,7 +6,7 @@
 /*   By: martins <martins@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 23:07:28 by martins           #+#    #+#             */
-/*   Updated: 2024/09/14 20:02:40 by martins          ###   ########.fr       */
+/*   Updated: 2024/11/16 16:01:29 by martins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,5 @@ struct		s_array
 	size_t	size;
 	size_t	capacity;
 };
-
-t_array		*ft_arrexpand(t_array *arr, size_t size);
-size_t		ft_arrcap(const t_array *arr);
 
 #endif
