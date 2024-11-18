@@ -6,7 +6,7 @@
 #    By: martins <martins@student.42sp.org.br>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 18:20:34 by martins           #+#    #+#              #
-#    Updated: 2024/11/16 23:58:33 by martins          ###   ########.fr        #
+#    Updated: 2024/11/19 11:33:21 by martins          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -312,9 +312,6 @@ re: ## Rebuild the program
 	$(MAKE) fclean
 	$(MAKE) all
 
-re.%: ## Force execution of a target recipe (usage: make re.<target>)
-	$(MAKE) --always-make $*
-
 run.%: $(NAME) ## Run the program (usage: make run[.<arguments>])
 	$(call message,RUNNING,./$(NAME) $*,$(CYAN))
 	./$(NAME) $*
@@ -334,14 +331,14 @@ valgrind: $(NAME)
 norm: ## Check the norm
 	norminette -R CheckForbiddenSourceHeader
 
-format.%: ## Format the code (usage: make format.<file>)
-	clang-format $*
+format: ## Format the code
+	clang-format -i $(shell find $(SRC_DIR) include -name '*.c' -or -name '*.cpp' -or -name '*.h')
 
-format.norm.%: ## Format the code according to the norm (usage: make format.norm.<file>)
-	c_formatter_42 $*
+format.norm: ## Format the code according to the norm
+	c_formatter_42 $(shell find $(SRC_DIR) include -name '*.c' -or -name '*.cpp' -or -name '*.h')
 
-index: ## Generate `compile_commands.json` for clangd
-	compiledb -n make
+index: ## Generate `compile_commands.json`
+	compiledb --no-build make
 
 update: ## Update the repository and its submodules
 	git stash
@@ -349,11 +346,14 @@ update: ## Update the repository and its submodules
 	git submodule update --init
 	git stash pop
 
+print.%: ## Print the value of a variable (usage: make print.<variable>)
+	$(info '$*'='$($*)')
+
 info.%: ## Print the target recipe (usage: make info.<target>)
 	$(MAKE) --dry-run --always-make $* | grep -v "info"
 
-print.%: ## Print the value of a variable (usage: make print.<variable>)
-	$(info '$*'='$($*)')
+force.%: ## Force execution of a target recipe (usage: make re.<target>)
+	$(MAKE) --always-make $*
 
 docker.%: ## Run a target inside a container (usage: make docker.<target>)
 	docker compose run --rm make $*
@@ -365,7 +365,7 @@ help: ## Show this message
 	grep -E '^[a-zA-Z_.%-]+:.*?## .*$$' Makefile \
 	| awk 'BEGIN {FS = ":.*?## "}; {printf "%2s$(CYAN)%-20s$(RESET) %s\n", "", $$1, $$2}'
 
-.PHONY: all debug sanitizer loose clean fclean re run valgrind update help
+.PHONY: all debug sanitizer loose clean fclean re run valgrind norm format format.norm index update help
 .SILENT:
 .IGNORE: clean fclean run update help
 .DELETE_ON_ERROR:
