@@ -6,7 +6,7 @@
 #    By: martins <martins@student.42sp.org.br>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 18:20:34 by martins           #+#    #+#              #
-#    Updated: 2024/11/19 11:39:02 by martins          ###   ########.fr        #
+#    Updated: 2024/11/19 12:46:27 by martins          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -338,6 +338,9 @@ format: ## Format the code
 
 format.norm: ## Format the code according to the norm
 	c_formatter_42 $(shell find $(SRC_DIR) $(INC_DIR) -name '*.c' -or -name '*.cpp' -or -name '*.h')
+
+test: ## TODO: Run the tests
+	$(info $(INFO)TODO$(RESET) Run the tests)
 
 index: ## Generate `compile_commands.json`
 	compiledb --no-build make
