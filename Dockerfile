@@ -1,7 +1,13 @@
-FROM python:3-alpine
+FROM python:3
 
 WORKDIR /usr/src/app
 
-RUN apk add --no-cache build-base clang clang-extra-tools valgrind ncurses git
+RUN apt-get update && apt-get install -y \
+	build-essential \
+	clang \
+	clang-format \
+	valgrind \
+	git \
+	&& rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir compiledb norminette c-formatter-42
