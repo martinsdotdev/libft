@@ -6,7 +6,7 @@
 /*   By: martins <martins@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 07:32:16 by martins           #+#    #+#             */
-/*   Updated: 2024/09/14 20:02:41 by martins          ###   ########.fr       */
+/*   Updated: 2024/12/15 14:53:21 by martins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ int			ft_abs(int j);
 long long	ft_llabs(long long j);
 void		ft_swap(void *a, void *b, size_t size);
 size_t		ft_setrange(ssize_t *start, ssize_t *end, size_t len);
+void		ft_panic(const char *message) __attribute__((noreturn));
+void		*ft_expect(void *ptr, const char *message);
 
 #endif

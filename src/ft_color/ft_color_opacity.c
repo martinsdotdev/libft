@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_color_opacity.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: martins <martins@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/04 17:02:07 by martins           #+#    #+#             */
-/*   Updated: 2024/12/15 18:06:13 by martins          ###   ########.fr       */
+/*   Created: 2024/12/15 17:02:34 by martins           #+#    #+#             */
+/*   Updated: 2024/12/15 17:02:36 by martins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_stdio.h"
-#include <unistd.h>
+#include "ft_color.h"
+#include <math.h>
 
 /**
- * @brief TODO: Writes the output according to a format string.
+ * @brief Returns a `t_color` with the same RGB components and a new opacity.
  *
- * @param format The format string.
- * @return The number of bytes printed. A negative value if an output error is
- * encountered.
+ * @param c A color.
+ * @param opacity The new opacity.
+ * @return A color with the new opacity.
  */
-int	ft_printf(const char *format __attribute__((unused)), ...)
+t_color	ft_color_opacity(t_color c, float_t opacity)
 {
-	ft_putstr_fd(__func__, STDERR_FILENO);
-	ft_putendl_fd(" is not implemented yet", STDERR_FILENO);
-	return (-1);
+	return ((t_color){
+		.red = c.red,
+		.green = c.green,
+		.blue = c.blue,
+		.alpha = c.alpha * opacity,
+	});
 }

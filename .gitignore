@@ -6,6 +6,7 @@
 *.ko
 *.obj
 *.elf
+build/
 
 # Linker output
 *.ilk
@@ -52,5 +53,5 @@ Mkfile.old
 dkms.conf
 
 # Indexer files
-.cache
+.cache/
 compile_commands.json
