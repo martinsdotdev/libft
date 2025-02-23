@@ -365,7 +365,7 @@ valgrind: $(NAME)
 
 .PHONY: norm
 norm: ## Check the norm
-	norminette -R CheckForbiddenSourceHeader
+	norminette -R CheckForbiddenSourceHeader | grep --invert-match "OK"
 
 .PHONY: format
 format: ## Format the code
