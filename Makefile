@@ -6,7 +6,7 @@
 #    By: martins <martins@student.42sp.org.br>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 18:20:34 by martins           #+#    #+#              #
-#    Updated: 2024/11/16 01:49:57 by martins          ###   ########.fr        #
+#    Updated: 2024/11/16 23:56:31 by martins          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -315,21 +315,33 @@ re: ## Rebuild the program
 re.%: ## Force execution of a target recipe (usage: make re.<target>)
 	$(MAKE) --always-make $*
 
-run: $(NAME) ## Run the program
-	$(call message,RUNNING,./$(NAME),$(CYAN))
-	./$(NAME)
-
-run.%: $(NAME) ## Run the program with arguments (usage: make run.<args>)
+run.%: $(NAME) ## Run the program (usage: make run[.<arguments>])
 	$(call message,RUNNING,./$(NAME) $*,$(CYAN))
 	./$(NAME) $*
 
-valgrind: $(NAME) ## Run valgrind on the program
+run: $(NAME)
+	$(call message,RUNNING,./$(NAME),$(CYAN))
+	./$(NAME)
+
+valgrind.%: $(NAME) ## Run valgrind on the program (usage: make valgrind[.<arguments>])
+	$(call message,RUNNING,valgrind ./$(NAME) $*,$(CYAN))
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./$(NAME) $*
+
+valgrind: $(NAME)
 	$(call message,RUNNING,valgrind ./$(NAME),$(CYAN))
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./$(NAME)
 
-valgrind.%: $(NAME) ## Run valgrind on the program passing arguments (usage: make run.valgrind.<args>)
-	$(call message,RUNNING,valgrind ./$(NAME) $*,$(CYAN))
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./$(NAME) $*
+norm: ## Check the norm
+	norminette -R CheckForbiddenSourceHeader
+
+format.%: ## Format the code (usage: make format.<file>)
+	clang-format $*
+
+format.norm.%: ## Format the code according to the norm (usage: make format.norm.<file>)
+	c_formatter_42 $*
+
+index: ## Generate `compile_commands.json` for clangd
+	compiledb -n make
 
 update: ## Update the repository and its submodules
 	git stash
