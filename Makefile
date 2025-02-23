@@ -6,7 +6,7 @@
 #    By: martins <martins@student.42sp.org.br>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 18:20:34 by martins           #+#    #+#              #
-#    Updated: 2024/11/16 23:56:31 by martins          ###   ########.fr        #
+#    Updated: 2024/11/16 23:58:33 by martins          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -354,6 +354,9 @@ info.%: ## Print the target recipe (usage: make info.<target>)
 
 print.%: ## Print the value of a variable (usage: make print.<variable>)
 	$(info '$*'='$($*)')
+
+docker.%: ## Run a target inside a container (usage: make docker.<target>)
+	docker compose run --rm make $*
 
 help: ## Show this message
 	echo "$(BOLD)Usage: make [<name>=<value>...]$(RESET) $(BOLD)$(CYAN)[target...]$(RESET)"
