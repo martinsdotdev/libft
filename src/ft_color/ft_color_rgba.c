@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_color_rgba.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: martins <martins@student.42sp.org.br>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/04 17:02:07 by martins           #+#    #+#             */
-/*   Updated: 2024/12/15 18:06:13 by martins          ###   ########.fr       */
+/*   Created: 2024/12/15 15:49:23 by martins           #+#    #+#             */
+/*   Updated: 2024/12/15 15:58:53 by martins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_stdio.h"
-#include <unistd.h>
+#include "ft_color.h"
+#include <stdint.h>
 
 /**
- * @brief TODO: Writes the output according to a format string.
+ * @brief Creates a `t_color` from the RGBA components.
  *
- * @param format The format string.
- * @return The number of bytes printed. A negative value if an output error is
- * encountered.
+ * @param r The red component.
+ * @param g The green component.
+ * @param b The blue component.
+ * @param a The alpha component.
+ * @return A color.
  */
-int	ft_printf(const char *format __attribute__((unused)), ...)
+t_color	ft_color_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
-	ft_putstr_fd(__func__, STDERR_FILENO);
-	ft_putendl_fd(" is not implemented yet", STDERR_FILENO);
-	return (-1);
+	return ((t_color){
+		.red = r,
+		.green = g,
+		.blue = b,
+		.alpha = a,
+	});
 }

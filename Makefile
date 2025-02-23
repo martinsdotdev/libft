@@ -6,11 +6,13 @@
 #    By: martins <martins@student.42sp.org.br>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 18:20:34 by martins           #+#    #+#              #
-#    Updated: 2024/11/19 13:13:22 by martins          ###   ########.fr        #
+#    Updated: 2024/12/17 15:40:14 by martins          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= libft.a
+
+VERSION		:= $(shell grep -oP 'LIBFT_VERSION "\K[^"]+' include/libft.h)
 
 # **************************************************************************** #
 #    Dependencies                                                              #
@@ -124,6 +126,8 @@ SRCS		:= \
 	ft_stdlib/extra/ft_min.c \
 	ft_stdlib/extra/ft_swap.c \
 	ft_stdlib/extra/ft_setrange.c \
+	ft_stdlib/extra/ft_panic.c \
+	ft_stdlib/extra/ft_expect.c \
 	\
 	ft_stdio/extra/ft_putchar_fd.c \
 	ft_stdio/extra/ft_putchar.c \
@@ -198,6 +202,15 @@ SRCS		:= \
 	ft_hashmap/ft_hshhash.c \
 	ft_hashmap/ft_hshfind.c \
 	ft_hashmap/ft_hshexpand.c \
+	\
+	ft_color/ft_color.c \
+	ft_color/ft_color_rgb.c \
+	ft_color/ft_color_rgba.c \
+	ft_color/ft_color_opacity.c \
+	ft_color/ft_color_grayscale.c \
+	ft_color/ft_color_lerp.c \
+	ft_color/ft_color_random.c \
+	ft_color/ft_color_parse.c \
 
 # Or use a wildcard to automatically generate the sources list
 # SRCS		:= $(shell find $(SRC_DIR) -name '*.cpp' -or -name '*.c' -or -name '*.s')
@@ -214,7 +227,7 @@ OBJS		:= $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEPS		:= $(OBJS:.o=.d)
 
 CC			:= cc
-CFLAGS		:= -std=c99 -Wall -Wextra -Werror -pedantic
+CFLAGS		:= -std=c11 -Wall -Wextra -Werror -pedantic
 
 CXX			:= c++
 CXXFLAGS	:= -std=c++98 -Wall -Wextra -Werror -pedantic
@@ -240,6 +253,7 @@ BLUE		:= $(shell tput setaf 4)
 MAGENTA		:= $(shell tput setaf 5)
 CYAN		:= $(shell tput setaf 6)
 WHITE		:= $(shell tput setaf 7)
+GRAY		:= $(shell tput setaf 8)
 ERROR		:= $(shell tput setab 1)$(WHITE)
 SUCCESS		:= $(shell tput setab 2)$(WHITE)
 WARNING		:= $(shell tput setab 3)$(WHITE)
@@ -345,6 +359,9 @@ test: ## TODO: Run the tests
 index: ## Generate `compile_commands.json`
 	compiledb --no-build make
 
+docs: ## Generate the documentation
+	doxygen
+
 update: ## Update the repository and its submodules
 	git stash
 	git pull
@@ -363,7 +380,12 @@ force.%: ## Force execution of a target recipe (usage: make re.<target>)
 docker.%: ## Run a target inside a container (usage: make docker.<target>)
 	docker compose run --rm make $*
 
+version: ## Print the current version of the project
+	$(info $(VERSION))
+
 help: ## Show this message
+	echo "$(BOLD)$(TITLE)$(RESET) $(GRAY)(v$(VERSION))$(RESET)"
+	echo
 	echo "$(BOLD)Usage: make [<name>=<value>...]$(RESET) $(BOLD)$(CYAN)[target...]$(RESET)"
 	echo
 	echo "$(BOLD)Targets:$(RESET)"
