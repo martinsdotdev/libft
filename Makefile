@@ -215,7 +215,7 @@ SRCS		:= \
 # Or use a wildcard to generate the sources list automatically
 # SRCS		:= $(shell find $(SRC_DIR) -name '*.c' -or -name '*.cpp' -or -name '*.s')
 
-SRCS		:= $(addprefix $(SRC_DIR)/, $(SRCS))
+SRCS		:= $(addprefix $(SRC_DIR)/,$(SRCS))
 
 # **************************************************************************** #
 #    Build                                                                     #
