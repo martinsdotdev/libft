@@ -6,7 +6,7 @@
 #    By: martins <martins@student.42sp.org.br>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 18:20:34 by martins           #+#    #+#              #
-#    Updated: 2024/11/19 11:33:21 by martins          ###   ########.fr        #
+#    Updated: 2024/11/19 11:39:02 by martins          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,10 @@ NAME		:= libft.a
 
 LIBS		:= \
 
+INC_DIR		:= include
+
 INCS		:= \
-	include \
+	$(INC_DIR) \
 
 # **************************************************************************** #
 #    Sources                                                                   #
@@ -332,10 +334,10 @@ norm: ## Check the norm
 	norminette -R CheckForbiddenSourceHeader
 
 format: ## Format the code
-	clang-format -i $(shell find $(SRC_DIR) include -name '*.c' -or -name '*.cpp' -or -name '*.h')
+	clang-format -i $(shell find $(SRC_DIR) $(INC_DIR) -name '*.c' -or -name '*.cpp' -or -name '*.h')
 
 format.norm: ## Format the code according to the norm
-	c_formatter_42 $(shell find $(SRC_DIR) include -name '*.c' -or -name '*.cpp' -or -name '*.h')
+	c_formatter_42 $(shell find $(SRC_DIR) $(INC_DIR) -name '*.c' -or -name '*.cpp' -or -name '*.h')
 
 index: ## Generate `compile_commands.json`
 	compiledb --no-build make
