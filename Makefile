@@ -6,7 +6,7 @@
 #    By: martins <martins@student.42sp.org.br>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/03 18:20:34 by martins           #+#    #+#              #
-#    Updated: 2024/11/19 12:46:27 by martins          ###   ########.fr        #
+#    Updated: 2024/11/19 13:13:22 by martins          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -370,6 +370,7 @@ help: ## Show this message
 	grep -E '^[a-zA-Z_.%-]+:.*?## .*$$' Makefile \
 	| awk 'BEGIN {FS = ":.*?## "}; {printf "%2s$(CYAN)%-20s$(RESET) %s\n", "", $$1, $$2}'
 
+.DEFAULT_GOAL := all
 .PHONY: all debug sanitizer loose clean fclean re run valgrind norm format format.norm index update help
 .SILENT:
 .IGNORE: clean fclean run update help
