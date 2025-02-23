@@ -212,8 +212,8 @@ SRCS		:= \
 	ft_color/ft_color_random.c \
 	ft_color/ft_color_parse.c \
 
-# Or use a wildcard to automatically generate the sources list
-# SRCS		:= $(shell find $(SRC_DIR) -name '*.cpp' -or -name '*.c' -or -name '*.s')
+# Or use a wildcard to generate the sources list automatically
+# SRCS		:= $(shell find $(SRC_DIR) -name '*.c' -or -name '*.cpp' -or -name '*.s')
 
 SRCS		:= $(addprefix $(SRC_DIR)/, $(SRCS))
 
@@ -263,7 +263,6 @@ RESET		:= $(shell tput sgr0)
 CLEAR		:= $(shell tput cuu1; tput el)
 TITLE		:= $(YELLOW)$(basename $(NAME))$(RESET)
 
-# 1: action, 2: target, 3: color
 define message
 	$(info [$(TITLE)] $(3)$(1)$(RESET) $(2))
 endef
@@ -315,7 +314,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c # $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 # $(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
-	printf $(CLEAR)
+	-printf $(CLEAR)
 	$(call message,CREATED,$(basename $(notdir $@)),$(GREEN))
 
 .PHONY: clean
@@ -347,12 +346,22 @@ run: $(NAME)
 
 valgrind.%: $(NAME) ## Run valgrind on the program (usage: make valgrind[.<arguments>])
 	$(call message,RUNNING,valgrind ./$(NAME) $*,$(CYAN))
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./$(NAME) $*
+	valgrind \
+	--leak-check=full \
+	--show-leak-kinds=all \
+	--track-origins=yes \
+	--track-fds=yes \
+	./$(NAME) $*
 
 .PHONY: valgrind
 valgrind: $(NAME)
 	$(call message,RUNNING,valgrind ./$(NAME),$(CYAN))
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./$(NAME)
+	valgrind \
+	--leak-check=full \
+	--show-leak-kinds=all \
+	--track-origins=yes \
+	--track-fds=yes \
+	./$(NAME)
 
 .PHONY: norm
 norm: ## Check the norm
@@ -360,11 +369,13 @@ norm: ## Check the norm
 
 .PHONY: format
 format: ## Format the code
-	clang-format -i $(shell find $(SRC_DIR) $(INC_DIR) -name '*.c' -or -name '*.cpp' -or -name '*.h')
+	clang-format \
+	-i $(shell find $(SRC_DIR) $(INC_DIR) -name '*.c' -or -name '*.cpp' -or -name '*.h' -or -name '*.hpp')
 
 .PHONY: format.norm
 format.norm: ## Format the code according to the norm
-	c_formatter_42 $(shell find $(SRC_DIR) $(INC_DIR) -name '*.c' -or -name '*.cpp' -or -name '*.h')
+	c_formatter_42 \
+	$(shell find $(SRC_DIR) $(INC_DIR) -name '*.c' -or -name '*.cpp' -or -name '*.h' -or -name '*.hpp')
 
 .PHONY: test
 test: ## TODO: Run the tests
@@ -402,6 +413,7 @@ version: ## Print the current version of the project
 	$(info $(VERSION))
 
 .PHONY: help
+.IGNORE: help
 help: ## Show this message
 	echo "$(BOLD)$(TITLE)$(RESET) $(GRAY)(v$(VERSION))$(RESET)"
 	echo
